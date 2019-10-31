@@ -1,5 +1,5 @@
 # MemBox (membox5)
-A fullstack javascript application created for language learners
+A fullstack javascript application
 
 # Getting Started
 * copy `.env.example` to `.env`, and set the required values
