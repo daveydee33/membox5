@@ -6,3 +6,10 @@ A fullstack javascript application created for language learners
 * start app
   * `npm run dev` for Development
   * `npm start` for Production
+
+# API Routes
+* /items
+  * GET - 
+
+# ToDo
+* Authentication and authentication middleware for restricted routes
