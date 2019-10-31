@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const ItemForm = () => {
-  const onSubmit = () => {
-    console.log('Submit...');
+  const defaultFormValues = {
+    title: '',
+    description: ''
   };
 
-  const onChange = () => {
-    console.log('Change.');
+  // Use state, and pull values from it
+  const [item, setItem] = useState(defaultFormValues);
+  const { title, description } = item;
+
+  const onSubmit = e => {
+    e.preventDefault();
+    setItem(defaultFormValues);
+  };
+
+  const onChange = e => {
+    setItem({ ...item, [e.target.name]: e.target.value });
   };
 
   return (
@@ -16,14 +26,14 @@ const ItemForm = () => {
         type="text"
         name="title"
         placeholder="Title"
-        // value={name}
+        value={title}
         onChange={onChange}
       />
       <input
         type="text"
-        name="email"
+        name="description"
         placeholder="Description"
-        // value={email}
+        value={description}
         onChange={onChange}
       />
       <div>
