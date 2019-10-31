@@ -2,11 +2,12 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const Item = require('../models/Item');
+const requireLogin = require('../middleware/requireLogin');
 
 // @route     GET api/items
 // @desc      Get all records - for ALL users
-// @access
-router.get('/', async (req, res) => {
+// @access    Restricted
+router.get('/', requireLogin, async (req, res) => {
   try {
     const items = await Item.find().sort({
       dateCreated: -1
@@ -20,10 +21,11 @@ router.get('/', async (req, res) => {
 
 // @route     POST api/items
 // @desc      Create a record
-// @access
+// @access    Restricted
 router.post(
   '/',
   [
+    requireLogin,
     [
       check('title')
         .not()
@@ -61,8 +63,8 @@ router.post(
 
 // @route     DELETE api/contacts/:id
 // @desc      Delete a contact
-// @access    Private
-router.delete('/:id', async (req, res) => {
+// @access    Restricted
+router.delete('/:id', requireLogin, async (req, res) => {
   console.log('Attempt to delete item:', req.params.id);
   try {
     // TODO: Make sure requesting user owns the record
