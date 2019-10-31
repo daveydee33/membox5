@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import ItemContext from '../context/item/itemContext';
 
 const ItemForm = () => {
+  // Context
+  const { addItem } = useContext(ItemContext);
+
   const defaultFormValues = {
     title: '',
     description: ''
   };
 
-  // Use state, and pull values from it
+  // State
   const [item, setItem] = useState(defaultFormValues);
   const { title, description } = item;
 
   const onSubmit = e => {
     e.preventDefault();
+    addItem(item);
     setItem(defaultFormValues);
   };
 
