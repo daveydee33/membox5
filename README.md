@@ -12,3 +12,12 @@ A fullstack javascript application created for language learners
   * GET - get ALL items
   * POST - create one item
 
+# ToDO
+- [] User accounts
+- [] Authentication
+- [] Add auth required to routes
+- [] Edit functionality with auth check
+- [] Make items public or private
+
+# Bugs to Fix
+- item delete returns 'Server Error' instead of Not found..

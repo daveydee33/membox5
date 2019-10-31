@@ -59,4 +59,27 @@ router.post(
   }
 );
 
+// @route     DELETE api/contacts/:id
+// @desc      Delete a contact
+// @access    Private
+router.delete('/:id', async (req, res) => {
+  console.log('Attempt to delete item:', req.params.id);
+  try {
+    // TODO: Make sure requesting user owns the record
+    // ...
+
+    // Attempt the delete, or return if not found
+    const item = await Item.findByIdAndDelete(req.params.id);
+    if (!item) return res.status(404).json({ msg: 'Item not found' });
+    // There seems to be an issue here that the above error only gets called if the provided id `req.params.id` is a valid "ObjectId".  If it's something like 'zzzzzz' or not correct format, it will just skip down here and get picked up in the catch statement below
+
+    res.json({ msg: 'Item deleted', item }); // Do we want to include the full item in the response?
+    console.log('Item deleted', item);
+  } catch (err) {
+    console.log('Error trying to delete: ', req.params.id);
+    console.error(err.message);
+    res.status(500).send(`Server error - trying to delete: ${req.params.id}`);
+  }
+});
+
 module.exports = router;
