@@ -4,7 +4,10 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
   googleId: String,
   name: String,
-  dateCreated: { type: Date, default: Date.now }
+  email: String,
+  image: String,
+  dateCreated: { type: Date, default: Date.now },
+  allDetails: String // We can remove this later -- just testing to see what is the full value.
 });
 
 mongoose.model('users', userSchema);
