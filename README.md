@@ -9,7 +9,6 @@ A fullstack javascript application created for language learners
 
 # API Routes
 * /items
-  * GET - 
+  * GET - get ALL items
+  * POST - create one item
 
-# ToDo
-* Authentication and authentication middleware for restricted routes
