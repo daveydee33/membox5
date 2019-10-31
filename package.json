@@ -4,8 +4,8 @@
   "description": "A fullstack javascript application created for language learners",
   "main": "server.js",
   "scripts": {
-    "start": "node -r dotenv/config server.js",
-    "server": "nodemon -r dotenv/config server.js"
+    "dev": "nodemon -r dotenv/config server.js",
+    "start": "node -r dotenv/config server.js"
   },
   "repository": {
     "type": "git",
