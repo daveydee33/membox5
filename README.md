@@ -20,4 +20,4 @@ A fullstack javascript application created for language learners
 - [] Make items public or private
 
 # Bugs to Fix
-- item delete returns 'Server Error' instead of Not found..
+- item delete returns 'Server Error' instead of Not found.  The catch is called if the req.params.id is not an ObjectID, eg. 'zzz'
