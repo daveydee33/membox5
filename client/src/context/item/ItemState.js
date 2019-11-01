@@ -7,7 +7,8 @@ import { GET_ITEMS, ADD_ITEM } from '../types';
 
 const ItemState = props => {
   const initialState = {
-    items: []
+    items: [],
+    loading: true
   };
 
   const [state, dispatch] = useReducer(itemReducer, initialState);
@@ -41,6 +42,7 @@ const ItemState = props => {
     <itemContext.Provider
       value={{
         items: state.items,
+        loading: state.loading,
         getItems,
         addItem
       }}

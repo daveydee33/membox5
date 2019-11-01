@@ -1,17 +1,22 @@
 import React, { useContext, useEffect, Fragment } from 'react';
 import itemContext from '../../context/item/itemContext';
 import Item from './Item';
+import Spinner from '../layout/Spinner';
 
 const ItemList = () => {
   // Context
-  const { getItems, items } = useContext(itemContext);
+  const { getItems, items, loading } = useContext(itemContext);
 
   useEffect(() => {
     getItems();
     // eslint-disable-next-line
   }, []);
 
-  if (items !== null && items.length === 0) {
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (items.length === 0) {
     return <h4>Add some items to get started</h4>;
   }
 

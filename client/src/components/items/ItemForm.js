@@ -34,13 +34,13 @@ const ItemForm = () => {
         value={title}
         onChange={onChange}
       />
-      <input
-        type="text"
+      <textarea
         name="description"
         placeholder="Description"
         value={description}
         onChange={onChange}
-      />
+        rows="5"
+      ></textarea>
       <div>
         <input
           type="submit"

@@ -5,7 +5,8 @@ export default (state, action) => {
     case GET_ITEMS:
       return {
         ...state,
-        items: action.payload
+        items: action.payload,
+        loading: false
       };
     case ADD_ITEM:
       return {
