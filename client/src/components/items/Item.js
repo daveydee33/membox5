@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import itemContext from '../../context/item/itemContext';
 
 const Item = ({ item }) => {
   const { _id, title, description } = item;
+
+  // Context
+  const { deleteItem } = useContext(itemContext);
 
   const onEdit = () => {
     //Edit
   };
 
   const onDelete = () => {
-    // Delete
+    deleteItem(_id);
   };
 
   return (

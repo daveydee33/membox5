@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
-import ItemContext from '../../context/item/itemContext';
+import itemContext from '../../context/item/itemContext';
 
 const ItemForm = () => {
   // Context
-  const { addItem } = useContext(ItemContext);
+  const { addItem } = useContext(itemContext);
 
   const defaultFormValues = {
     title: '',

@@ -3,7 +3,7 @@ import axios from 'axios';
 import itemContext from './itemContext';
 import itemReducer from './itemReducer';
 
-import { GET_ITEMS, ADD_ITEM } from '../types';
+import { GET_ITEMS, ADD_ITEM, DELETE_ITEM } from '../types';
 
 const ItemState = props => {
   const initialState = {
@@ -38,13 +38,25 @@ const ItemState = props => {
     }
   };
 
+  // Delete Item
+  const deleteItem = async id => {
+    try {
+      const res = await axios.delete(`/api/items/${id}`);
+      console.log(`Deleting item: ${id}`, res.data);
+      dispatch({ type: DELETE_ITEM, payload: id });
+    } catch (err) {
+      console.error('Delete Item error');
+    }
+  };
+
   return (
     <itemContext.Provider
       value={{
         items: state.items,
         loading: state.loading,
         getItems,
-        addItem
+        addItem,
+        deleteItem
       }}
     >
       {props.children}

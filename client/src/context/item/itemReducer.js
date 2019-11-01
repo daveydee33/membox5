@@ -1,4 +1,4 @@
-import { GET_ITEMS, ADD_ITEM } from '../types';
+import { GET_ITEMS, ADD_ITEM, DELETE_ITEM } from '../types';
 
 export default (state, action) => {
   switch (action.type) {
@@ -12,6 +12,12 @@ export default (state, action) => {
       return {
         ...state,
         items: [action.payload, ...state.items]
+      };
+    case DELETE_ITEM:
+      return {
+        ...state,
+        items: state.items.filter(item => item._id !== action.payload),
+        loading: false
       };
 
     default:
