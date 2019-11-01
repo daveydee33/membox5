@@ -1,13 +1,12 @@
 import React, { Fragment } from 'react';
-import ItemForm from '../ItemForm';
+import ItemForm from '../items/ItemForm';
+import ItemList from '../items/ItemList';
 
 const Home = () => {
   return (
     <Fragment>
-      <div>
-        <ItemForm />
-      </div>
-      <div>List...</div>
+      <ItemForm />
+      <ItemList />
     </Fragment>
   );
 };

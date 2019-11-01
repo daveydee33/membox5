@@ -1,7 +1,12 @@
-import { ADD_ITEM } from '../types';
+import { GET_ITEMS, ADD_ITEM } from '../types';
 
 export default (state, action) => {
   switch (action.type) {
+    case GET_ITEMS:
+      return {
+        ...state,
+        items: action.payload
+      };
     case ADD_ITEM:
       return {
         ...state,

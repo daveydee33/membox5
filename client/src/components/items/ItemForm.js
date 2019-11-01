@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import ItemContext from '../context/item/itemContext';
+import ItemContext from '../../context/item/itemContext';
 
 const ItemForm = () => {
   // Context
@@ -48,13 +48,6 @@ const ItemForm = () => {
           className="btn btn-primary btn-block"
         />
       </div>
-      {/* {current && (
-        <div>
-          <button className="btn btn-light btn-block" onClick={clearAll}>
-            Clear
-          </button>
-        </div>
-      )} */}
     </form>
   );
 };

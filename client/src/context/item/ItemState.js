@@ -3,7 +3,7 @@ import axios from 'axios';
 import itemContext from './itemContext';
 import itemReducer from './itemReducer';
 
-import { ADD_ITEM } from '../types';
+import { GET_ITEMS, ADD_ITEM } from '../types';
 
 const ItemState = props => {
   const initialState = {
@@ -11,6 +11,16 @@ const ItemState = props => {
   };
 
   const [state, dispatch] = useReducer(itemReducer, initialState);
+
+  // Get Items
+  const getItems = async () => {
+    try {
+      const res = await axios.get('/api/items');
+      dispatch({ type: GET_ITEMS, payload: res.data });
+    } catch (err) {
+      console.error('Get Items error');
+    }
+  };
 
   // Add Item
   const addItem = async item => {
@@ -31,6 +41,7 @@ const ItemState = props => {
     <itemContext.Provider
       value={{
         items: state.items,
+        getItems,
         addItem
       }}
     >
