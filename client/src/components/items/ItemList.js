@@ -22,7 +22,11 @@ const ItemList = () => {
 
   return (
     <Fragment>
-      <h1>Item List</h1>
+      <h1>
+        Item List
+        <span style={{ float: 'right' }}>Count: {items.length}</span>
+      </h1>
+
       {items.map(item => (
         <Item key={item._id} item={item} />
       ))}
