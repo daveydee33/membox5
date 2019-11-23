@@ -94,7 +94,7 @@ router.put('/:id', requireLogin, async (req, res) => {
     if (!item) return res.status(404).json({ msg: 'Item not found' }); // looks like this doesn't get called-- the catch-error is called instead.
 
     // Make sure logged in user making request (from x-auth-token header) owns item
-    if (item.user.toString() !== req.user.id)
+    if (item.user && item.user.toString() !== req.user.id)
       return res
         .status(401)
         .json({ msg: 'You dont have authorization to edit this record' });

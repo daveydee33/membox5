@@ -3,11 +3,19 @@ import axios from 'axios';
 import itemContext from './itemContext';
 import itemReducer from './itemReducer';
 
-import { GET_ITEMS, ADD_ITEM, DELETE_ITEM } from '../types';
+import {
+  GET_ITEMS,
+  ADD_ITEM,
+  UPDATE_ITEM,
+  DELETE_ITEM,
+  SET_CURRENT,
+  CLEAR_CURRENT
+} from '../types';
 
 const ItemState = props => {
   const initialState = {
     items: [],
+    current: null,
     loading: true
   };
 
@@ -34,7 +42,22 @@ const ItemState = props => {
       const res = await axios.post('/api/items', item, config);
       dispatch({ type: ADD_ITEM, payload: res.data });
     } catch (err) {
-      console.error('Add Item error');
+      console.error('Add Item error', err);
+    }
+  };
+
+  // Update Item
+  const updateItem = async item => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    try {
+      const res = await axios.put(`/api/items/${item._id}`, item, config);
+      dispatch({ type: UPDATE_ITEM, payload: res.data });
+    } catch (err) {
+      console.error('Update Item error', err);
     }
   };
 
@@ -49,14 +72,28 @@ const ItemState = props => {
     }
   };
 
+  // Set Current Item
+  const setCurrent = item => {
+    dispatch({ type: SET_CURRENT, payload: item });
+  };
+
+  // Clear Current Item
+  const clearCurrent = item => {
+    dispatch({ type: CLEAR_CURRENT });
+  };
+
   return (
     <itemContext.Provider
       value={{
         items: state.items,
         loading: state.loading,
+        current: state.current,
         getItems,
         addItem,
-        deleteItem
+        updateItem,
+        deleteItem,
+        setCurrent,
+        clearCurrent
       }}
     >
       {props.children}

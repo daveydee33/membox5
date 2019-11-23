@@ -6,10 +6,10 @@ const Item = ({ item }) => {
   const { _id, title, description } = item;
 
   // Context
-  const { deleteItem } = useContext(itemContext);
+  const { deleteItem, setCurrent } = useContext(itemContext);
 
   const onEdit = () => {
-    //Edit
+    setCurrent(item);
   };
 
   const onDelete = () => {
