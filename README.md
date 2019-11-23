@@ -1,8 +1,20 @@
 # MemBox (membox5)
 
-A fullstack javascript application
+A full stack javascript application
 
-# Getting Started
+- Full CRUD operations (Create, Read, Update, Delete)
+- React using functional components with Hooks and Context
+- Authentication using Passport with Google auth strategy
+
+## Tech Stack
+
+- Node.js
+- Express.js
+- ReactJS
+- MongoDB
+- Passport
+
+## Getting Started
 
 - copy `.env.example` to `.env`, and set the required values
 - start app
@@ -10,13 +22,13 @@ A fullstack javascript application
   - `npm start` for Production
 - login at http://localhost:5000/auth/google
 
-# API Routes
+## API Routes
 
 - /items
   - GET - get ALL items
   - POST - create one item
 
-# ToDO
+## ToDO
 
 - [] User accounts
 - [] Authentication
@@ -24,6 +36,6 @@ A fullstack javascript application
 - [] Edit functionality with auth check
 - [] Make items public or private
 
-# Bugs to Fix
+## Bugs to Fix
 
 - item delete returns 'Server Error' instead of Not found. The catch is called if the req.params.id is not an ObjectID, eg. 'zzz'
