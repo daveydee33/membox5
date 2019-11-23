@@ -45,7 +45,7 @@ router.post(
     try {
       // I could check for a duplicate record here - but I don't think we should care
 
-      // create new contact record
+      // create new item record
       const newItem = new Item({
         title,
         description
@@ -54,15 +54,67 @@ router.post(
       const item = await newItem.save();
       res.json(item);
     } catch (err) {
-      console.error('Error saving new contact');
+      console.error('Error saving new item');
       console.error(err);
       res.status(500).send('Server error');
     }
   }
 );
 
-// @route     DELETE api/contacts/:id
-// @desc      Delete a contact
+// @route     PUT api/items/:id
+// @desc      Update an Item
+// @access    Restricted
+/* TODO:  I would probably refactor this a lot.  
+- The 404 doesn't work.  
+- I wouldn't use 'let item' and re-assign it.  I would return a different variable name - so we know it's the new record, and not the original record.  eg.  updatedItem'.  
+- Also, I would put the same field validation here as we did in the create new item route.  eg, add verification that name is not empty, and type is only 'personal' or 'professional'
+- Brad didn't know what the 'new: true' option actually does.
+- Some of Brad's HTTP codes are not exactly correct.
+- I don't know if this will work we want to change a value to empty.  
+  - eg, If we have name: "Name", and we want to clear it, the PUT contents would have name: "", but it doesn't seem to clear it by setting with empty string.  It looks like it just ignores it.  Might be a #BUG that we need to fix later.
+*/
+router.put('/:id', requireLogin, async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty())
+    return res.status(400).json({ errors: errors.array() });
+
+  const { title, description } = req.body;
+
+  // Build an Item object
+  const itemData = {};
+  if (title) itemData.title = title;
+  if (description) itemData.description = description;
+  itemData.dateModified = Date.now();
+
+  try {
+    let item = await Item.findById(req.params.id);
+    console.log('Attempting to edit this item: ', item);
+
+    // TODO: Fix this - because it's never being called in the PUT or DELETE -- it goes straight to the catch/500
+    if (!item) return res.status(404).json({ msg: 'Item not found' }); // looks like this doesn't get called-- the catch-error is called instead.
+
+    // Make sure logged in user making request (from x-auth-token header) owns item
+    if (item.user.toString() !== req.user.id)
+      return res
+        .status(401)
+        .json({ msg: 'You dont have authorization to edit this record' });
+
+    item = await Item.findByIdAndUpdate(
+      req.params.id,
+      { $set: itemData },
+      { new: true } // tells mongoose to return the new/updated version of the record, instead of the previous
+    );
+    console.log('New updated item: ', item);
+
+    res.json(item);
+  } catch (err) {
+    console.error('Error updating item: ', err);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route     DELETE api/items/:id
+// @desc      Delete an Item
 // @access    Restricted
 router.delete('/:id', requireLogin, async (req, res) => {
   console.log('Attempt to delete item:', req.params.id);

@@ -13,6 +13,10 @@ const ItemSchema = Schema({
   dateCreated: {
     type: Date,
     default: Date.now
+  },
+  dateModified: {
+    type: Date,
+    default: Date.now
   }
 });
 
