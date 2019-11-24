@@ -17,6 +17,10 @@ const Navbar = ({ title, icon }) => {
         <li>
           <Link to="/about">About</Link>
         </li>
+        <li>
+          {/* This only works as an Anchor tag, not a Link tag.  */}
+          <a href="/auth/google">Login with Google</a>
+        </li>
       </ul>
     </div>
   );
