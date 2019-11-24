@@ -37,7 +37,7 @@ passport.use(
           name: profile.displayName,
           email: profile.emails[0].value,
           image: profile.photos[0].value,
-          allDetails: JSON.stringify(profile)
+          allDetails: JSON.stringify(profile) // I don't need all this data
         }).save();
 
         done(null, newUser);

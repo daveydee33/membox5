@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import AuthContext from '../../context/auth/authContext';
 
 const Navbar = ({ title, icon }) => {
+  const { fetchUser, auth } = useContext(AuthContext);
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const renderLoginLogoutProfileLink = () => {
+    switch (auth) {
+      case null:
+        return '-';
+      case false:
+        return <a href="/auth/google">Login with Google</a>;
+      default:
+        return <a href="/auth/logout">{auth.email}</a>;
+    }
+  };
+
   return (
     <div className="navbar bg-primary">
       <h1>
@@ -17,10 +35,7 @@ const Navbar = ({ title, icon }) => {
         <li>
           <Link to="/about">About</Link>
         </li>
-        <li>
-          {/* This only works as an Anchor tag, not a Link tag.  */}
-          <a href="/auth/google">Login with Google</a>
-        </li>
+        <li>{renderLoginLogoutProfileLink()}</li>
       </ul>
     </div>
   );

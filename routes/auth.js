@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const requireLogin = require('../middleware/requireLogin');
 
 // @route     GET auth/google
 // @desc      Login with Google
@@ -27,6 +26,7 @@ router.get(
 // @desc      Logout
 // @access
 router.get('/logout', (req, res) => {
+  console.debug('logging out user: ', req.user);
   req.logout();
   res.redirect('/');
 });
@@ -34,7 +34,9 @@ router.get('/logout', (req, res) => {
 // @route     GET auth/current_user
 // @desc      Get current logged in user data
 // @access    Restricted
-router.get('/current_user', requireLogin, (req, res) => {
+router.get('/current_user', (req, res) => {
+  if (!req.user) res.send();
+
   // I only want to return limited data
   const { _id, googleId, name, email, image } = req.user;
   res.json({ _id, googleId, name, email, image });
