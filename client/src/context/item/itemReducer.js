@@ -4,7 +4,9 @@ import {
   UPDATE_ITEM,
   DELETE_ITEM,
   SET_CURRENT,
-  CLEAR_CURRENT
+  CLEAR_CURRENT,
+  FILTER_ITEMS,
+  CLEAR_FILTER
 } from '../types';
 
 export default (state, action) => {
@@ -49,6 +51,24 @@ export default (state, action) => {
       return {
         ...state,
         current: null
+      };
+    case FILTER_ITEMS:
+      return {
+        ...state,
+        filteredItems: state.items.filter(item => {
+          const regex = new RegExp(`${action.payload}`, 'gi');
+
+          // to handle if any of those fields are not set.
+          item.title = item.title || '';
+          item.description = item.description || '';
+
+          return item.title.match(regex) || item.description.match(regex);
+        })
+      };
+    case CLEAR_FILTER:
+      return {
+        ...state,
+        filteredItems: null
       };
 
     default:
