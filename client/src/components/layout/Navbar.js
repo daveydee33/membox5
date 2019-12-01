@@ -8,6 +8,7 @@ const Navbar = ({ title, icon }) => {
 
   useEffect(() => {
     fetchUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const renderLoginLogoutProfileLink = () => {

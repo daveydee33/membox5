@@ -68,7 +68,7 @@ const ItemForm = () => {
         )}
         <input
           type="submit"
-          value={current ? 'Save Edits' : 'Add Item'}
+          value={current ? 'Save Edits' : 'Add'}
           className={
             current ? 'btn btn-block btn-dark' : 'btn btn-block btn-primary'
           }
