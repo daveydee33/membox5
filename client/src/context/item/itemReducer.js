@@ -4,8 +4,9 @@ import {
   UPDATE_ITEM,
   DELETE_ITEM,
   SET_CURRENT,
-  CLEAR_CURRENT
-} from '../types';
+  CLEAR_CURRENT,
+  SET_FILTER
+} from "../types";
 
 export default (state, action) => {
   switch (action.type) {
@@ -50,9 +51,14 @@ export default (state, action) => {
         ...state,
         current: null
       };
+    case SET_FILTER:
+      return {
+        ...state,
+        filter: action.payload
+      };
 
     default:
-      console.error('This should happen - itemReducer.js');
+      console.error("This should happen - itemReducer.js");
       return state;
   }
 };

@@ -1,7 +1,7 @@
-import React, { useReducer } from 'react';
-import axios from 'axios';
-import itemContext from './itemContext';
-import itemReducer from './itemReducer';
+import React, { useReducer } from "react";
+import axios from "axios";
+import itemContext from "./itemContext";
+import itemReducer from "./itemReducer";
 
 import {
   GET_ITEMS,
@@ -9,12 +9,14 @@ import {
   UPDATE_ITEM,
   DELETE_ITEM,
   SET_CURRENT,
-  CLEAR_CURRENT
-} from '../types';
+  CLEAR_CURRENT,
+  SET_FILTER
+} from "../types";
 
 const ItemState = props => {
   const initialState = {
     items: [],
+    filter: "",
     current: null,
     loading: true
   };
@@ -24,10 +26,10 @@ const ItemState = props => {
   // Get Items
   const getItems = async () => {
     try {
-      const res = await axios.get('/api/items');
+      const res = await axios.get(`/api/items?q=${state.filter}`);
       dispatch({ type: GET_ITEMS, payload: res.data });
     } catch (err) {
-      console.error('Get Items error');
+      console.error("Get Items error");
     }
   };
 
@@ -35,14 +37,14 @@ const ItemState = props => {
   const addItem = async item => {
     const config = {
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       }
     };
     try {
-      const res = await axios.post('/api/items', item, config);
+      const res = await axios.post("/api/items", item, config);
       dispatch({ type: ADD_ITEM, payload: res.data });
     } catch (err) {
-      console.error('Add Item error', err);
+      console.error("Add Item error", err);
     }
   };
 
@@ -50,14 +52,14 @@ const ItemState = props => {
   const updateItem = async item => {
     const config = {
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       }
     };
     try {
       const res = await axios.put(`/api/items/${item._id}`, item, config);
       dispatch({ type: UPDATE_ITEM, payload: res.data });
     } catch (err) {
-      console.error('Update Item error', err);
+      console.error("Update Item error", err);
     }
   };
 
@@ -68,7 +70,7 @@ const ItemState = props => {
       console.log(`Deleting item: ${id}`, res.data);
       dispatch({ type: DELETE_ITEM, payload: id });
     } catch (err) {
-      console.error('Delete Item error');
+      console.error("Delete Item error");
     }
   };
 
@@ -82,10 +84,16 @@ const ItemState = props => {
     dispatch({ type: CLEAR_CURRENT });
   };
 
+  // Set Search Filter
+  const setFilter = query => {
+    dispatch({ type: SET_FILTER, payload: query });
+  };
+
   return (
     <itemContext.Provider
       value={{
         items: state.items,
+        filter: state.filter,
         loading: state.loading,
         current: state.current,
         getItems,
@@ -93,7 +101,8 @@ const ItemState = props => {
         updateItem,
         deleteItem,
         setCurrent,
-        clearCurrent
+        clearCurrent,
+        setFilter
       }}
     >
       {props.children}

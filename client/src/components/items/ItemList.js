@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, Fragment } from 'react';
-import itemContext from '../../context/item/itemContext';
-import Item from './Item';
-import Spinner from '../layout/Spinner';
+import React, { useContext, useEffect, Fragment } from "react";
+import itemContext from "../../context/item/itemContext";
+import Item from "./Item";
+import Spinner from "../layout/Spinner";
 
 const ItemList = () => {
   // Context
-  const { getItems, items, loading } = useContext(itemContext);
+  const { getItems, items, loading, filter } = useContext(itemContext);
 
   useEffect(() => {
     getItems();
     // eslint-disable-next-line
-  }, []);
+  }, [filter]);
 
   if (loading) {
     return <Spinner />;
@@ -24,7 +24,7 @@ const ItemList = () => {
     <Fragment>
       <h1>
         Item List
-        <span style={{ float: 'right' }}>Count: {items.length}</span>
+        <span style={{ float: "right" }}>Count: {items.length}</span>
       </h1>
 
       {items.map(item => (
