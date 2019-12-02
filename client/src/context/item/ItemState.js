@@ -9,15 +9,12 @@ import {
   UPDATE_ITEM,
   DELETE_ITEM,
   SET_CURRENT,
-  CLEAR_CURRENT,
-  FILTER_ITEMS,
-  CLEAR_FILTER
+  CLEAR_CURRENT
 } from '../types';
 
 const ItemState = props => {
   const initialState = {
     items: [],
-    filteredItems: null,
     current: null,
     loading: true
   };
@@ -85,21 +82,10 @@ const ItemState = props => {
     dispatch({ type: CLEAR_CURRENT });
   };
 
-  // Filter Items
-  const filterItems = filter => {
-    dispatch({ type: FILTER_ITEMS, payload: filter });
-  };
-
-  // Clear Filter
-  const clearFilter = () => {
-    dispatch({ type: CLEAR_FILTER });
-  };
-
   return (
     <itemContext.Provider
       value={{
         items: state.items,
-        filteredItems: state.filteredItems,
         loading: state.loading,
         current: state.current,
         getItems,
@@ -107,9 +93,7 @@ const ItemState = props => {
         updateItem,
         deleteItem,
         setCurrent,
-        clearCurrent,
-        filterItems,
-        clearFilter
+        clearCurrent
       }}
     >
       {props.children}
