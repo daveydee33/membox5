@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, Fragment } from 'react';
+import React, { useContext, useEffect, useState, Fragment } from 'react';
 import itemContext from '../../context/item/itemContext';
 import Item from './Item';
 import Spinner from '../layout/Spinner';
@@ -7,10 +7,12 @@ const ItemList = () => {
   // Context
   const { getItems, items, loading } = useContext(itemContext);
 
+  // State
+  const [filter, setFilter] = useState(null);
+
   useEffect(() => {
     getItems();
-    // eslint-disable-next-line
-  }, []);
+  }, [items, getItems]);
 
   if (loading) {
     return <Spinner />;
@@ -20,14 +22,38 @@ const ItemList = () => {
     return <h4>Add some items to get started</h4>;
   }
 
+  const onChangeFilter = e => {
+    const filter = e.target.value;
+    if (!filter) {
+      setFilter(null);
+    } else {
+      setFilter(filter);
+    }
+  };
+
+  const regex = new RegExp(filter, 'gi');
+  const itemsFiltered = !filter
+    ? items
+    : items.filter(item => {
+        return item.title.match(regex) || item.description.match(regex);
+      });
+
   return (
     <Fragment>
+      <form>
+        <input
+          type="text"
+          placeholder="Filter Items..."
+          onChange={onChangeFilter}
+        />
+      </form>
+
       <h1>
         Item List
-        <span style={{ float: 'right' }}>Count: {items.length}</span>
+        <span style={{ float: 'right' }}>Count: {itemsFiltered.length}</span>
       </h1>
 
-      {items.map(item => (
+      {itemsFiltered.map(item => (
         <Item key={item._id} item={item} />
       ))}
     </Fragment>
