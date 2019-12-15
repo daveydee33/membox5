@@ -15,8 +15,8 @@ app.use(
   cookieSession({
     name: 'session',
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-    keys: [process.env.COOKIE_KEY]
-  })
+    keys: [process.env.COOKIE_KEY],
+  }),
 );
 app.use(passport.initialize());
 app.use(passport.session());
@@ -24,6 +24,15 @@ app.use(passport.session());
 // Define Routes
 app.use('/api/items', require('./routes/items'));
 app.use('/auth', require('./routes/auth'));
+
+// Serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'));
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'client', 'build')),
+  );
+}
 
 const PORT = process.env.PORT || 5000; // process.env.PORT value will be set by Heroku.
 
