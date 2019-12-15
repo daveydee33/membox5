@@ -1,21 +1,27 @@
 import React, { useState, useContext, useEffect } from 'react';
 import itemContext from '../../context/item/itemContext';
+import CreatableSelect from 'react-select/creatable';
+import { tagOptions } from '../../constants.js';
 
 const ItemForm = () => {
   // Context
   const { addItem, updateItem, current, clearCurrent } = useContext(
-    itemContext
+    itemContext,
   );
 
   const defaultFormValues = {
     title: '',
-    description: ''
+    description: '',
   };
 
   // State
   const [item, setItem] = useState(defaultFormValues);
 
   const { title, description } = item;
+
+  const handleTagChange = newValue => {
+    console.log('handleTagChange', newValue); // #TODO
+  };
 
   useEffect(() => {
     if (current) {
@@ -60,6 +66,12 @@ const ItemForm = () => {
         onChange={onChange}
         rows="5"
       ></textarea>
+      <CreatableSelect
+        isClearable
+        isMulti
+        onChange={handleTagChange}
+        options={tagOptions}
+      />
       <div>
         {current && (
           <button className="btn btn-light btn-block" onClick={cancelEdit}>
