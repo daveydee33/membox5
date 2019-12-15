@@ -4,7 +4,7 @@ import {
   UPDATE_ITEM,
   DELETE_ITEM,
   SET_CURRENT,
-  CLEAR_CURRENT
+  CLEAR_CURRENT,
 } from '../types';
 
 export default (state, action) => {
@@ -13,12 +13,12 @@ export default (state, action) => {
       return {
         ...state,
         items: action.payload,
-        loading: false
+        loading: false,
       };
     case ADD_ITEM:
       return {
         ...state,
-        items: [action.payload, ...state.items]
+        items: [action.payload, ...state.items],
       };
     case UPDATE_ITEM:
       return {
@@ -30,29 +30,29 @@ export default (state, action) => {
         // ],
         // idea 2 - this will replace the item in it's existing position in the array.  I think I like this method better, because I can always sort the array by dateModified later.
         items: state.items.map(item =>
-          item._id === action.payload._id ? action.payload : item
+          item._id === action.payload._id ? action.payload : item,
         ),
-        loading: false
+        loading: false,
       };
     case DELETE_ITEM:
       return {
         ...state,
         items: state.items.filter(item => item._id !== action.payload),
-        loading: false
+        loading: false,
       };
     case SET_CURRENT:
       return {
         ...state,
-        current: action.payload
+        current: action.payload,
       };
     case CLEAR_CURRENT:
       return {
         ...state,
-        current: null
+        current: null,
       };
 
     default:
-      console.error('This should happen - itemReducer.js');
+      console.error('Probably an issue - itemReducer.js');
       return state;
   }
 };
