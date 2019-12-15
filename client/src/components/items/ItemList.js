@@ -12,7 +12,8 @@ const ItemList = () => {
 
   useEffect(() => {
     getItems();
-  }, [items, getItems]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (loading) {
     return <Spinner />;
