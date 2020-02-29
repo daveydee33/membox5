@@ -7,7 +7,7 @@ const passport = require('passport');
 // @access
 router.get(
   '/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+  passport.authenticate('google', { scope: ['profile', 'email'] }),
 );
 
 // @route     GET auth/google/callback
@@ -19,7 +19,7 @@ router.get(
   (req, res) => {
     // Successful authentication, redirect home.
     res.redirect('/');
-  }
+  },
 );
 
 // @route     GET auth/logout
@@ -35,7 +35,7 @@ router.get('/logout', (req, res) => {
 // @desc      Get current logged in user data
 // @access    Restricted
 router.get('/current_user', (req, res) => {
-  if (!req.user) res.send();
+  if (!req.user) return res.status(400).send();
 
   // I only want to return limited data
   const { _id, googleId, name, email, image } = req.user;
