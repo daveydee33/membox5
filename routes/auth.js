@@ -35,7 +35,7 @@ router.get('/logout', (req, res) => {
 // @desc      Get current logged in user data
 // @access    Restricted
 router.get('/current_user', (req, res) => {
-  if (!req.user) return res.status(400).send();
+  if (!req.user) return res.send();
 
   // I only want to return limited data
   const { _id, googleId, name, email, image } = req.user;
