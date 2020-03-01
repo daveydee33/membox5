@@ -8,7 +8,7 @@ const ItemList = () => {
   const { getItems, items, loading } = useContext(itemContext);
 
   // State
-  const [filter, setFilter] = useState(null);
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
     getItems();
@@ -24,12 +24,11 @@ const ItemList = () => {
   }
 
   const onChangeFilter = e => {
-    const filter = e.target.value;
-    if (!filter) {
-      setFilter(null);
-    } else {
-      setFilter(filter);
-    }
+    setFilter(e.target.value);
+  };
+
+  const onClearFilter = () => {
+    setFilter('');
   };
 
   const regex = new RegExp(filter, 'gi');
@@ -41,13 +40,19 @@ const ItemList = () => {
 
   return (
     <Fragment>
-      <form>
+      <div className="input-and-button">
         <input
           type="text"
           placeholder="Filter Items..."
           onChange={onChangeFilter}
+          value={filter}
         />
-      </form>
+        {filter && (
+          <button className="btn btn-danger" onClick={onClearFilter}>
+            Clear
+          </button>
+        )}
+      </div>
 
       <h1>
         Item List
